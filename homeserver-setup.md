@@ -20,7 +20,7 @@ docker start portainer
 ```
 lsblk -f
 mkfs -t ext4 /dev/sda 
-mkdir -p /path/to/your/mountpoint
+mkdir -p /your/mountpoint
 mount -t auto /dev/sda /your/mountpoint
 cp /etc/fstab /etc/fstab.backup
 echo "/dev/sda /usr/media ext4 defaults 0 0" >> /etc/fstab
@@ -36,6 +36,18 @@ ufw allow samba
 adduser sambauser
 smbpasswd -a sambauser
 chmod -R 1077 /your/mountpoint/sambashare
+```
+
+```
+socket options = TCP_NODELAY
+
+[sambashare]
+   comment = Media Share
+   path = /your/mountpoint/sambashare
+   read only = no
+   browsable = yes
+   guest ok = no
+   valid users = sambauser
 ```
 
 ## Increase swap space
