@@ -1,0 +1,32 @@
+version: '3.8'
+
+services:
+  nextcloud:
+    image: nextcloud:latest
+    container_name: nextcloud
+    restart: unless-stopped
+    ports:
+      - "8080:80" # Change the host port if necessary
+    volumes:
+      - /usr/media/nextcloud:/var/www/html # Mount the Nextcloud storage folder
+      - /usr/media/misc/nextcloud:/config   # Mount the configuration folder
+    environment:
+      - MYSQL_HOST=mysql
+      - MYSQL_DATABASE=nextcloud
+      - MYSQL_USER=nextcloud
+      - MYSQL_PASSWORD=your_secret_password
+    depends_on:
+      - mysql
+
+  mysql:
+    image: mysql:5.7
+    container_name: nextcloud-mysql
+    restart: unless-stopped
+    command: --transaction-isolation=READ-COMMITTED --binlog-format=ROW
+    environment:
+      - MYSQL_ROOT_PASSWORD=your_very_secret_password
+      - MYSQL_DATABASE=nextcloud
+      - MYSQL_USER=nextcloud
+      - MYSQL_PASSWORD=your_secret_password
+    volumes:
+      - /usr/media/misc/mysql:/var/lib/mysql # Mount the MySQL data folder
