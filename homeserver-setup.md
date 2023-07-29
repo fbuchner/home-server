@@ -20,8 +20,8 @@ docker start portainer
 ```
 lsblk -f
 mkfs -t ext4 /dev/sda 
-mkdir -p /your/mountpoint
-mount -t auto /dev/sda /your/mountpoint
+mkdir -p /usr/media
+mount -t auto /dev/sda /usr/media
 cp /etc/fstab /etc/fstab.backup
 echo "/dev/sda /usr/media ext4 defaults 0 0" >> /etc/fstab
 mount -a
@@ -35,7 +35,7 @@ service smbd restart
 ufw allow samba
 adduser sambauser
 smbpasswd -a sambauser
-chmod -R 1077 /your/mountpoint/sambashare
+chmod -R 1077 /usr/media/
 ```
 
 ```
@@ -43,7 +43,7 @@ socket options = TCP_NODELAY
 
 [sambashare]
    comment = Media Share
-   path = /your/mountpoint/sambashare
+   path = /usr/media/
    read only = no
    browsable = yes
    guest ok = no
