@@ -2,13 +2,9 @@
 
 > Note that most commands require sudo privilege
 
-## Update system and activate automatic security updates
-```
-apt-get update && apt-get upgrade -y
-dpkg-reconfigure -plow unattended-upgrades
-```
+## Initial configuration
 
-## Setup Portainer environment
+### Setup Portainer environment
 ```
 apt install docker-ce
 systemctl status docker
@@ -16,7 +12,7 @@ docker create --name portainer --restart=always --net=bridge -e PGID=1001 -e PUI
 docker start portainer
 ```
 
-## Setup new disk
+### Setup new disk
 ```
 lsblk -f
 mkfs -t ext4 /dev/sda 
@@ -27,7 +23,7 @@ echo "/dev/sda /usr/media ext4 defaults 0 0" >> /etc/fstab
 mount -a
 ```
 
-## Setup fileshare
+### Setup fileshare
 ```
 apt install samba
 nano /etc/samba/smb.conf
@@ -35,7 +31,7 @@ service smbd restart
 ufw allow samba
 adduser sambauser
 smbpasswd -a sambauser
-chmod -R 1077 /usr/media/
+chmod -R 1777 /usr/media/
 ```
 
 ```
@@ -50,7 +46,7 @@ socket options = TCP_NODELAY
    valid users = sambauser
 ```
 
-## Increase swap space
+### Increase swap space
 ```
 swapon --show
 swapoff -a
@@ -61,4 +57,12 @@ swapon /swap.img
 free -h
 echo '/swap.img none swap sw 0 0' | sudo tee -a /etc/fstab 
 ```
+
+## Server hardening
+### Update system and activate automatic security updates
+```
+apt-get update && apt-get upgrade -y
+dpkg-reconfigure -plow unattended-upgrades
+```
+
 
