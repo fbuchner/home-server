@@ -58,11 +58,18 @@ free -h
 echo '/swap.img none swap sw 0 0' | sudo tee -a /etc/fstab 
 ```
 
+### Misc
+Remove ubuntu pro advertisement
+```
+sudo dpkg-divert --divert /etc/apt/apt.conf.d/20apt-esm-hook.conf.bak --rename --local /etc/apt/apt.conf.d/20apt-esm-hook.conf
+```
+
 ## Server hardening
 ### Update system and activate automatic security updates
 ```
 apt-get update && apt-get upgrade -y
 dpkg-reconfigure -plow unattended-upgrades
 ```
+
 
 
