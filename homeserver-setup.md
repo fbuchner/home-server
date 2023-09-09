@@ -61,7 +61,7 @@ echo '/swap.img none swap sw 0 0' | sudo tee -a /etc/fstab
 ### Misc
 Remove ubuntu pro advertisement
 ```
-sudo dpkg-divert --divert /etc/apt/apt.conf.d/20apt-esm-hook.conf.bak --rename --local /etc/apt/apt.conf.d/20apt-esm-hook.conf
+dpkg-divert --divert /etc/apt/apt.conf.d/20apt-esm-hook.conf.bak --rename --local /etc/apt/apt.conf.d/20apt-esm-hook.conf
 ```
 
 ## Server hardening
@@ -71,5 +71,19 @@ apt-get update && apt-get upgrade -y
 dpkg-reconfigure -plow unattended-upgrades
 ```
 
+### Configure SSH
+On client machine generate key pair and copy to server
+```
+ssh-keygen serverkey
+ssh-copy-id username@yourip
+```
+On server remove password-based authentication
+```
+nano /etc/ssh/sshd_config
+```
+Set PasswordAuthentication no
+```
+systemctl restart ssh
+```
 
 
