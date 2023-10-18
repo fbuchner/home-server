@@ -1,0 +1,15 @@
+---
+version: "2"
+services:
+  homer:
+    image: b4bz/homer
+    container_name: homer
+    volumes:
+      - /usr/media/misc/homer-dashboard:/www/assets
+    ports:
+      - 8091:8080
+    user: 1000:1000 # default
+    environment:
+      - INIT_ASSETS=1 # default
+    restart: unless-stopped
+    
