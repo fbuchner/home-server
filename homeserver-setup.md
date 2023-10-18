@@ -23,6 +23,20 @@ echo "/dev/sda /usr/media ext4 defaults 0 0" >> /etc/fstab
 mount -a
 ```
 
+### Setup encrypted backup disk
+```
+lsblk -f
+sudo umount /dev/sdb
+sudo cryptsetup luksFormat /dev/sdb
+sudo cryptsetup luksOpen /dev/sdb backup
+sudo mkfs.ext4 /dev/mapper/backup
+sudo mkdir /mnt/backup
+sudo mount /dev/mapper/backup /mnt/backup
+
+sudo umount backup
+sudo cryptsetup luksClose backup
+```
+
 ### Setup fileshare
 ```
 apt install samba
