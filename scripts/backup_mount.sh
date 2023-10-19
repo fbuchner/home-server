@@ -5,18 +5,18 @@
 # Name of the encrypted drive (as defined in /etc/crypttab)
 encrypted_drive="backup"
 
+# Device as listed in lsblk
+encrypted_device="sdb1"
+
 # Mount point for the decrypted drive
 mount_point="/mnt/backup"
 
-# Check if the drive is already open
-if ! cryptsetup isLuks /dev/mapper/$encrypted_drive; then
-    # The drive is not open, so let's open it
-    sudo cryptsetup luksOpen /dev/mapper/$encrypted_drive $encrypted_drive
-fi
+sudo cryptsetup luksOpen /dev/$encrypted_device $encrypted_drive
 
 # Check if the drive is already mounted
 if ! mountpoint -q $mount_point; then
     # The drive is not mounted, so let's mount it
+    echo "Mounting drive at $mount_point"
     sudo mount /dev/mapper/$encrypted_drive $mount_point
     echo "Drive mounted at $mount_point"
 else
