@@ -11,17 +11,17 @@ mount_point="/mnt/backup"
 # Check if the drive is mounted
 if mountpoint -q $mount_point; then
     # The drive is mounted, so let's unmount it
-    sudo umount $mount_point
-    echo "Drive unmounted from $mount_point"
+    if sudo umount $mount_point; then
+        echo "Drive unmounted from $mount_point"
+    else
+        echo "Failed to unmount $mount_point"
+        echo "Processes using the mounted directory:"
+        sudo lsof +D $mount_point
+        exit 1
+    fi
 else
     echo "Drive is not mounted at $mount_point"
 fi
 
-# Check if the drive is open
-if cryptsetup isLuks /dev/mapper/$encrypted_drive; then
-    # The drive is open, so let's close it
-    sudo cryptsetup luksClose $encrypted_drive
-    echo "Drive closed"
-else
-    echo "Drive is not open"
-fi
+sudo cryptsetup luksClose $encrypted_drive
+echo "Drive encryption closed."
