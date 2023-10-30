@@ -95,7 +95,7 @@ On server remove password-based authentication
 ```
 nano /etc/ssh/sshd_config
 ```
-Set PasswordAuthentication no
+Set PasswordAuthentication no and PubkeyAuthentication yes
 ```
 systemctl restart ssh
 ```
