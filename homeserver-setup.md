@@ -8,7 +8,7 @@
 ```
 apt install docker-ce
 systemctl status docker
-docker create --name portainer --restart=always --net=bridge -e PGID=1001 -e PUID=1001 -v /docker/portainer/config:/config -v /var/run/docker.sock:/var/run/docker.sock -p 9000:9000 portainer/portainer
+docker create --name portainer --restart=always --net=bridge -e PGID=1001 -e PUID=1001 -v /docker/portainer/config:/config -v /var/run/docker.sock:/var/run/docker.sock -p 9443:9443 portainer/portainer-ce
 docker start portainer
 ```
 
