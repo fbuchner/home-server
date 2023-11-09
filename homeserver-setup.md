@@ -100,4 +100,20 @@ Set PasswordAuthentication no and PubkeyAuthentication yes
 systemctl restart ssh
 ```
 
+### Data quality
+Once everything is up and running the integrity of the media library should be monitored.
 
+Print a directory tree
+```
+ls -R | grep ":$" | sed -e 's/:$//' -e 's/[^-][^\/]*\//--/g' -e 's/^/   /' -e 's/-/|/'
+```
+
+Check which media uses the most storage space
+```
+du -sch /usr/media/movies/* /usr/media/tvseries/*  | sort -rh
+```
+
+Make sure that all the files in the media directory have an extension
+```
+find /usr/media/movies -type f ! -name "*.*"
+```
