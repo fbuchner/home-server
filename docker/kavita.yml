@@ -1,0 +1,13 @@
+version: '3.9'
+services:
+    kavita:
+        image: jvmilazz0/kavita:latest
+        volumes:
+            - /usr/media/books:/books
+            - /usr/media/misc/kavita:/kavita/config
+        environment:
+            - TZ=Europe/Berlin
+        ports:
+            - "5000:5000"
+        restart: unless-stopped
+        
