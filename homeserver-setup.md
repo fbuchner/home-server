@@ -13,6 +13,7 @@ docker start portainer
 ```
 
 ### Setup new disk
+Make sure to only add the automatic mounting with fstab if the volume will not be encrypted. A failure in mounting because of an encrypted volume leads to the system refusing to boot up properly.
 ```
 lsblk -f
 mkfs -t ext4 /dev/sda 
@@ -24,6 +25,7 @@ mount -a
 ```
 
 ### Setup encrypted backup disk
+You can found scripts for automatic mounting and unmounting of the encrypted backup disk in the scripts folder.
 ```
 lsblk -f
 sudo umount /dev/sdb
