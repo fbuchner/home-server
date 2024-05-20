@@ -11,6 +11,13 @@ mount_point="/mnt/backup"
 # Check if the drive is mounted
 if mountpoint -q $mount_point; then
     # The drive is mounted, so let's unmount it
+
+    # in case you use this script for your main volume you might want to stop all docker containers
+    # sudo docker stop $(sudo docker ps -aq)
+
+    # in case you use this script for a network storage you might want to stop samba
+    #sudo service smbd 
+    
     if sudo umount $mount_point; then
         echo "Drive unmounted from $mount_point"
     else
