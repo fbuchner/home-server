@@ -16,7 +16,7 @@ if mountpoint -q $mount_point; then
     # sudo docker stop $(sudo docker ps -aq)
 
     # in case you use this script for a network storage you might want to stop samba
-    # sudo service smbd 
+    # sudo service smbd stop
     
     if sudo umount $mount_point; then
         echo "Drive unmounted from $mount_point"
