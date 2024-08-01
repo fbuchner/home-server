@@ -25,7 +25,7 @@ mount -a
 ```
 
 ### Setup encrypted backup disk
-You can found scripts for automatic mounting and unmounting of the encrypted backup disk in the scripts folder.
+You can find scripts for automatic mounting and unmounting of the encrypted backup disk in the scripts folder.
 ```
 lsblk -f
 sudo umount /dev/sdb
