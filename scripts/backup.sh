@@ -1,7 +1,9 @@
 #!/bin/bash
 
-# This script is used to backup a data folder on the server to an external hard drive folder. 
+# This script is used to backup a data folder on the server to an external hard drive folder.
 # Using rsync it creates an exact replica, non existing new files in the target directory are copied, non existing ones in the source are deleted.
+
+set -e
 
 # Source directory
 source_dir="/usr/media"
@@ -22,11 +24,10 @@ if [ ! -d "$target_dir" ]; then
 fi
 
 # Perform the backup using rsync with sudo
-sudo rsync -av --delete --update "$source_dir/" "$target_dir/"
-
-# Check the rsync exit status
-if [ $? -eq 0 ]; then
+if sudo rsync -av --delete --update "$source_dir/" "$target_dir/"; then
     echo "Backup completed successfully."
 else
-    echo "Backup failed with error code $?."
+    exit_code=$?
+    echo "Backup failed with error code $exit_code."
+    exit $exit_code
 fi
