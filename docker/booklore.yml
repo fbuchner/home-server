@@ -1,0 +1,30 @@
+version: '3.8'
+services:
+  booklore:
+    image: ghcr.io/adityachandelgit/booklore-app:latest
+    container_name: booklore
+    depends_on:
+      - mariadb
+    ports:
+      - "6060:6060"
+    volumes:
+      - /usr/media/misc/booklore/data:/app/data
+      - /usr/media/books:/books
+    environment:
+      - MYSQL_ROOT_PASSWORD="put-a-safe-password-here"
+      - BOOKLORE_DATA_PATH=/usr/media/misc/booklore/data
+      - BOOKLORE_BOOKS_PATH=/usr/media/books
+      - MARIADB_CONFIG_PATH=/usr/media/misc/booklore/config
+      - TZ=Etc/UTC  
+  mariadb:
+    image: lscr.io/linuxserver/mariadb:11.4.5
+    container_name: mariadb
+    volumes:
+      - /usr/media/misc/booklore/config:/config
+    environment:
+      - MYSQL_ROOT_PASSWORD="put-a-safe-password-here"
+      - BOOKLORE_DATA_PATH=/usr/media/misc/booklore/data
+      - BOOKLORE_BOOKS_PATH=/usr/media/books
+      - MARIADB_CONFIG_PATH=/usr/media/misc/booklore/config
+      - TZ=Etc/UTC  
+    restart: unless-stopped

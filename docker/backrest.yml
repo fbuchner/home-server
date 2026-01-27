@@ -1,0 +1,21 @@
+version: "3.2"
+services:
+  backrest:
+    image: garethgeorge/backrest
+    container_name: backrest
+    hostname: backrest
+    volumes:
+      - /usr/media/misc/backrest/data:/data
+      - /usr/media/misc/backrest/config:/config
+      - /usr/media/misc/backrest/cache:/cache
+      - /usr/media:/userdata # [optional] mount local paths to backup here.
+      - /mnt/backup-internal/repo:/repo-backup-internal # [optional] mount repos if using local storage, not necessary for remotes e.g. B2, S3, etc.
+    environment:
+      - BACKREST_DATA=/data # path for backrest data. restic binary and the database are placed here.
+      - BACKREST_CONFIG=/config/config.json # path for the backrest config file.
+      - XDG_CACHE_HOME=/cache # path for the restic cache which greatly improves performance.
+      - TZ=Europe/Berlin # set the timezone for the container, used as the timezone for cron jobs.
+    restart: unless-stopped
+    ports:
+      - 9898:9898
+  

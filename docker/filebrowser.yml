@@ -1,0 +1,12 @@
+name: filebrowser
+services:
+    filebrowser:
+        volumes:
+            - /usr/media/storage:/srv
+            - /usr/media/misc/filebrowser/:/database
+            - /usr/media/misc/filebrowser/:/config
+        user: "${UID}:${GID}"
+        ports:
+            - 8773:80
+        image: filebrowser/filebrowser
+        restart: unless-stopped
