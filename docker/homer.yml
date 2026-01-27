@@ -1,5 +1,5 @@
----
-version: "2"
+name: homer
+
 services:
   homer:
     image: b4bz/homer
@@ -8,8 +8,7 @@ services:
       - /usr/media/misc/homer-dashboard:/www/assets
     ports:
       - 8091:8080
-    user: 1000:1000 # default
+    user: 1000:1000
     environment:
-      - INIT_ASSETS=1 # default
+      - INIT_ASSETS=1
     restart: unless-stopped
-    

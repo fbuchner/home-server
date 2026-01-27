@@ -1,4 +1,5 @@
-version: '3.8'
+name: booklore
+
 services:
   booklore:
     image: ghcr.io/adityachandelgit/booklore-app:latest
@@ -11,20 +12,18 @@ services:
       - /usr/media/misc/booklore/data:/app/data
       - /usr/media/books:/books
     environment:
-      - MYSQL_ROOT_PASSWORD="put-a-safe-password-here"
-      - BOOKLORE_DATA_PATH=/usr/media/misc/booklore/data
-      - BOOKLORE_BOOKS_PATH=/usr/media/books
-      - MARIADB_CONFIG_PATH=/usr/media/misc/booklore/config
-      - TZ=Etc/UTC  
+      - MYSQL_ROOT_PASSWORD=put-a-safe-password-here
+      - BOOKLORE_DATA_PATH=/app/data
+      - BOOKLORE_BOOKS_PATH=/books
+      - TZ=Europe/Berlin
+    restart: unless-stopped
+
   mariadb:
     image: lscr.io/linuxserver/mariadb:11.4.5
-    container_name: mariadb
+    container_name: booklore-mariadb
     volumes:
       - /usr/media/misc/booklore/config:/config
     environment:
-      - MYSQL_ROOT_PASSWORD="put-a-safe-password-here"
-      - BOOKLORE_DATA_PATH=/usr/media/misc/booklore/data
-      - BOOKLORE_BOOKS_PATH=/usr/media/books
-      - MARIADB_CONFIG_PATH=/usr/media/misc/booklore/config
-      - TZ=Etc/UTC  
+      - MYSQL_ROOT_PASSWORD=put-a-safe-password-here
+      - TZ=Europe/Berlin
     restart: unless-stopped
