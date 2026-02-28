@@ -14,6 +14,7 @@
 - [Server hardening](#server-hardening)
   - [Update system and activate automatic security updates](#update-system-and-activate-automatic-security-updates)
   - [Configure SSH](#configure-ssh)
+  - [Setup Tailscale](#setup-tailscale)
 - [Data quality](#data-quality)
 
 ## Initial configuration
@@ -44,7 +45,24 @@ docker start portainer
 
 ### Setup new disk
 
-Make sure to only add the automatic mounting with fstab if the volume will not be encrypted. A failure in mounting because of an encrypted volume leads to the system refusing to boot up properly.
+If the media drive will be encrypted (recommended), set it up as a LUKS volume and use the provided mount/unmount scripts. Do not add it to `/etc/fstab` — a failure to mount an encrypted drive at boot causes the system to refuse to boot properly.
+
+```bash
+lsblk -f
+sudo cryptsetup luksFormat /dev/sda
+sudo cryptsetup luksOpen /dev/sda media
+sudo mkfs.ext4 /dev/mapper/media
+sudo mkdir -p /usr/media
+sudo mount /dev/mapper/media /usr/media
+
+# When done, unmount and close
+sudo umount /usr/media
+sudo cryptsetup luksClose media
+```
+
+Use `scripts/media_mount.sh` and `scripts/media_unmount.sh` to mount and unmount the drive.
+
+If the drive will not be encrypted, you can use a plain ext4 setup with automatic mounting:
 
 ```bash
 lsblk -f
@@ -159,6 +177,17 @@ Then restart SSH:
 ```bash
 sudo systemctl restart ssh
 ```
+
+### Setup Tailscale
+
+Tailscale provides a secure VPN for remote access to the server without exposing ports to the internet.
+
+```bash
+curl -fsSL https://tailscale.com/install.sh | sh
+sudo tailscale up
+```
+
+After authenticating, the server will be accessible via its Tailscale IP from any device on your Tailscale network.
 
 ## Data quality
 

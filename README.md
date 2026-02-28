@@ -7,7 +7,7 @@ This repository contains all kinds of snippets that allow you to setup and run y
 In case you are basing your setup around other central premises make sure to adapt code and configurations accordingly.
 
 - Ubuntu server is chosen as an operating system
-- In addition to the internal storage there is a second disk (`/dev/sda`) that will be used for all media data and mounted at `/usr/media` and a backup drive mounted at `/dev/sdb1`
+- In addition to the internal storage there is a second LUKS-encrypted disk (`/dev/sda`) used for all media data, mounted at `/usr/media`, and a backup drive at `/dev/sdb1`
 - Applications are run as docker containers using Portainer
 
 ## Setup Guide
@@ -25,9 +25,11 @@ This repository includes Docker Compose configurations for:
 | Big-AGI | AI chat interface | 3000 |
 | Booklore | Ebook library manager | 6060 |
 | Filebrowser | Web-based file manager | 8773 |
+| Home Assistant | Home automation platform | 8123 |
 | Homer | Dashboard for services | 8091 |
 | Immich | Photo and video management | 2283 |
 | Jellyfin | Media server | 8096 |
+| Meerkat CRM | Contact and relationship manager | 3007 |
 | Navidrome | Music streaming server | 4533 |
 | Watchtower | Automatic container updates | - |
 
@@ -39,6 +41,8 @@ This repository includes Docker Compose configurations for:
 │   ├── backup_mount.sh       # Mount encrypted backup drive
 │   ├── backup_unmount.sh     # Unmount encrypted backup drive
 │   ├── backup.sh             # Rsync backup to external drive
+│   ├── media_mount.sh        # Mount encrypted media drive
+│   ├── media_unmount.sh      # Unmount encrypted media drive
 │   └── navidrome-create-playlists.sh
 └── homeserver-setup.md       # Step-by-step server setup guide
 ```
